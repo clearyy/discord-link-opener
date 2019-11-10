@@ -3,3 +3,6 @@ Automatically open browser tabs when links matching given constraints are sent i
 
 # Requirements
 asyncio, discord.py
+
+# Operating Systems
+This was designed for and only tested on windows.
