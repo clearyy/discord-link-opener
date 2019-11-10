@@ -4,7 +4,6 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 import re
-from colorama import Fore
 
 #pylint: disable=anomalous-backslash-in-string
 
