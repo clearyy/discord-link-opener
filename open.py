@@ -45,8 +45,6 @@ async def on_ready():
         else:
             print('No keywords currently blacklisted.\n')
         start_count += 1
-    else:
-        print('You have not provided any keywords to monitor. Restart with keywords added to the list.')
 
 @client.event
 async def on_message(message):
