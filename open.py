@@ -28,7 +28,7 @@ start_count = 0
 #check for keywords and blacklisted words in message urls and open browser if conditions are met
 async def check_urls(urls):
     for url in urls:
-        if any(x in url for x in keywords) and all(x not in url for x in blacklist):
+        if any(x in url.lower() for x in keywords) and all(x not in url.lower() for x in blacklist):
             #enter path to chrome here, for windows 10, this should work
             webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(url)
             print(f'Opened {url}')
@@ -48,22 +48,24 @@ async def on_ready():
         else:
             print('No keywords currently blacklisted.\n')
         start_count += 1
-
+        
 @client.event
 async def on_message(message):
     if message.channel.id in channels:
         if message.embeds:
             for embed in message.embeds:
                 toembed = embed.to_dict()
-                #lazy fix
-                try:
-                    for field in toembed['fields']:
-                        urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+",str(field))
-                        await check_urls(urls)
-                except:
-                    pass
-        else:
+                if str(toembed['type']).lower() != 'link':
+                    try:
+                        for field in toembed['fields']:
+                            urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+",str(field))
+                            if urls:
+                                await check_urls(urls)
+                    except:
+                        pass
+        if message.content != '':
             urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+",message.content)
-            await check_urls(urls)
+            if urls:
+                await check_urls(urls)
 
 client.run(token,bot=False)
