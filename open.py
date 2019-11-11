@@ -1,3 +1,7 @@
+'''
+By cleary#6545 // @preorderd
+'''
+
 import webbrowser
 import asyncio
 import discord
