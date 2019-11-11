@@ -42,7 +42,7 @@ async def on_ready():
         if len(keywords) >= 1 and keywords[0] != '':
             print('Watching for keywords {}.\n'.format(', '.join(keywords)))
         else:
-            print('No keywords have been provided.')
+            print('No keywords have been provided.\n')
         if len(blacklist) > 0:
             print('Ignoring keywords {}\n'.format(', '.join(blacklist)))
         else:
