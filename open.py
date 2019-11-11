@@ -59,6 +59,7 @@ async def on_message(message):
         if message.embeds:
             for embed in message.embeds:
                 toembed = embed.to_dict()
+                #we can skip links because they will be in message.content
                 if str(toembed['type']).lower() != 'link':
                     try:
                         for field in toembed['fields']:
