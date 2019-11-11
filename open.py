@@ -37,7 +37,7 @@ async def check_urls(urls):
 async def on_ready():
     global start_count
     # only print this info on the first time the client launches. this is due to d.py calling on_ready() after the bot regains connection
-    if start_count == 0 and len(keywords) != 1 and keywords[0] != '':
+    if start_count == 0 and len(keywords) >= 1 and keywords[0] != '':
         print('{} is ready to cop some restocks.\n'.format(str(client.user)))
         print('Watching for keywords {}.\n'.format(', '.join(keywords)))
         if len(blacklist) > 0:
