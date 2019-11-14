@@ -1,7 +1,3 @@
-'''
-By cleary#6545 // @preorderd
-'''
-
 import webbrowser
 import asyncio
 import discord
@@ -14,11 +10,11 @@ import re
 client = Bot('adawd@@#^^')
 client.remove_command('help')
 
-#enter keywords to check for in links seperated by commas
-keywords = ['']
+#prompt user enter keywords to check for in links
+keywords = list(map(str,input("Enter keywords seperated by space: ").split()))
 
-#enter negative keywords that will prevent a browser window from opening seperated by commas. to have no blacklisted words, leave this empty
-blacklist = []
+#prompt user to enter negative keywords that will prevent a browser window from opening to have no blacklisted words, press enter right away
+blacklist = list(map(str,input("Enter blacklisted keywords seperated by space: ").split()))
 
 #enter channel id(s) where links would be picked up (monitor channel id) seperated by commas. these should be ints
 channels = []
@@ -42,7 +38,7 @@ async def on_ready():
     global start_count
     # only print this info on the first time the client launches. this is due to d.py calling on_ready() after the bot regains connection
     if start_count == 0:
-        print('{} is ready to cop some restocks.\n'.format(str(client.user)))
+        print('\n{} is ready to cop some restocks.\n'.format(str(client.user)))
         if len(keywords) >= 1 and keywords[0] != '':
             print('Watching for keywords {}.\n'.format(', '.join(keywords)))
         else:
@@ -59,7 +55,6 @@ async def on_message(message):
         if message.embeds:
             for embed in message.embeds:
                 toembed = embed.to_dict()
-                #we can skip links because they will be in message.content
                 if str(toembed['type']).lower() != 'link':
                     try:
                         for field in toembed['fields']:
