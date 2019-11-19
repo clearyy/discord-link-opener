@@ -44,7 +44,7 @@ async def on_ready():
         else:
             print('No keywords have been provided.\n')
         if len(blacklist) > 0:
-            print('Ignoring keywords {}\n'.format(', '.join(blacklist)))
+            print('Ignoring keywords {}.\n'.format(', '.join(blacklist)))
         else:
             print('No keywords currently blacklisted.\n')
         start_count += 1
