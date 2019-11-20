@@ -5,6 +5,10 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 import re
 
+'''
+by cleary#6546 // @preorderd
+'''
+
 #pylint: disable=anomalous-backslash-in-string
 
 client = Bot('adawd@@#^^')
