@@ -9,8 +9,8 @@ Automatically open browser tabs when links matching given constraints are sent i
 3.    Download Link Opener: https://github.com/clearyy/discord-link-opener
 4.    Copy open.py to your desktop.
 5.    Right click open.py and select “Edit with IDLE”. Once in the code, only do the following two things:
-                 o    Add the discord channel IDs (separated by commas) that you would like to monitor.
-                 o    Add your Discord token. (Tutorial on how to find your token: 
+                     Add the discord channel IDs (separated by commas) that you would like to monitor.
+                     Add your Discord token. (Tutorial on how to find your token: 
                         https://www.youtube.com/watch?v=tI1lzqzLQCs)
       Do not edit the keyword and blacklist lines.
 6.    Save the file.
