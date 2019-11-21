@@ -4,8 +4,8 @@ Automatically open browser tabs when links matching given constraints are sent i
 # Installation and Usage
 1.    Download Python 3.6.x or 3.7.x . Before installing, make sure to check “Add Python to PATH”.
 2.   Once installed, open CMD and type: 
-                 o    pip install discord.py[voice]
-                 o    pip install asyncio
+                     pip install discord.py[voice] and 
+                     pip install asyncio
 3.    Download Link Opener: https://github.com/clearyy/discord-link-opener
 4.    Copy open.py to your desktop.
 5.    Right click open.py and select “Edit with IDLE”. Once in the code, only do the following two things:
