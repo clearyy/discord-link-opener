@@ -38,8 +38,9 @@ async def check_urls(urls):
             print(f'Opened {url}')
 
 @client.event
-async def on_ready():
+async def on_message(message):
     global start_count
+    # temporary bypass to weird d.py cacheing issue
     # only print this info on the first time the client launches. this is due to d.py calling on_ready() after the bot regains connection
     if start_count == 0:
         print('\n{} is ready to cop some restocks.\n'.format(str(client.user)))
@@ -52,24 +53,22 @@ async def on_ready():
         else:
             print('No keywords currently blacklisted.\n')
         start_count += 1
-        
-@client.event
-async def on_message(message):
-    if message.channel.id in channels:
-        if message.embeds:
-            for embed in message.embeds:
-                toembed = embed.to_dict()
-                if str(toembed['type']).lower() != 'link':
-                    try:
-                        for field in toembed['fields']:
-                            urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+",str(field))
-                            if urls:
-                                await check_urls(urls)
-                    except:
-                        pass
-        if message.content != '':
-            urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+",message.content)
-            if urls:
-                await check_urls(urls)
+    else:
+        if message.channel.id in channels:
+            if message.embeds:
+                for embed in message.embeds:
+                    toembed = embed.to_dict()
+                    if str(toembed['type']).lower() != 'link':
+                        try:
+                            for field in toembed['fields']:
+                                urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+",str(field))
+                                if urls:
+                                    await check_urls(urls)
+                        except:
+                            pass
+            if message.content != '':
+                urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+",message.content)
+                if urls:
+                    await check_urls(urls)
 
 client.run(token,bot=False)
