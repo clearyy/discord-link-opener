@@ -31,3 +31,6 @@ asyncio, discord.py
 
 # Operating Systems
 This was designed for and only tested on windows.
+
+# Credits
+This script is a combination of the versions by clearyy and Vincentt1705 and some own ideas. Thanks for the inspiration!
