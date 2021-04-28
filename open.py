@@ -4,6 +4,8 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 import re
+import winsound
+from datetime import datetime
 
 '''
 by cleary#6546 // @preorderd
@@ -29,13 +31,22 @@ token = ''
 global start_count
 start_count = 0
 
+#whether you would like to hear a bell sound as soon as a link is opened
+playBellSound = True
+
 #check for keywords and blacklisted words in message urls and open browser if conditions are met
 async def check_urls(urls):
     for url in urls:
         if any(x in url.lower() for x in keywords) and all(x not in url.lower() for x in blacklist):
             #enter path to chrome here, for windows 10, this should work
-            webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(url)
-            print(f'Opened {url}')
+            webbrowser.get("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe %s").open(url)
+            if playBellSound:
+                winsound.PlaySound('bell.wav', winsound.SND_FILENAME)
+            # datetime object containing current date and time
+            now = datetime.now()
+            # dd/mm/YY H:M:S
+            dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+            print(f'[{dt_string}] - [INFO] Opened {url}')
 
 @client.event
 async def on_message(message):
