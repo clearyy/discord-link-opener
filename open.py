@@ -18,7 +18,7 @@ from datetime import datetime
 
 #pylint: disable=anomalous-backslash-in-string
 
-client = Bot('adawd@@#^^')
+client = Bot('CarlaaColumna')
 client.remove_command('help')
 
 # Prompt users for keywords to search for in the links.
@@ -92,15 +92,15 @@ async def on_message(message):
     # temporary bypass to weird d.py cacheing issue
     # only print this info on the first time the client launches. this is due to d.py calling on_ready() after the bot regains connection
     if start_count == 0:
-        print('\n{} is ready to cop some restocks.\n'.format(str(client.user)))
+        print_time('{} is ready to cop some restocks.'.format(str(client.user)))
         if len(keywords) >= 1 and keywords[0] != '':
-            print('Watching for keywords {}.\n'.format(', '.join(keywords)))
+            print_time('Watching for keywords {}.'.format(', '.join(keywords)))
         else:
-            print('No keywords have been provided.\n')
+            print_time('No keywords have been provided.')
         if len(blacklist) > 0:
-            print('Ignoring keywords {}.\n'.format(', '.join(blacklist)))
+            print_time('Ignoring keywords {}.'.format(', '.join(blacklist)))
         else:
-            print('No keywords currently blacklisted.\n')
+            print_time('No keywords currently blacklisted.')
         start_count += 1
     else:
         if message.channel.id in channels:
@@ -125,7 +125,7 @@ async def on_message(message):
                         except:
                             pass
             if message.content != '':
-                print(message.content)
+                print_time(message.content)
                 urls4 = re.findall("(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'.,<>?«»“”‘’]))?",message.content)
                 if urls4:
                     await check_urls(urls4, message.channel.name)
