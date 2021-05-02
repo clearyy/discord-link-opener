@@ -18,7 +18,7 @@ from datetime import datetime
 
 #pylint: disable=anomalous-backslash-in-string
 
-client = Bot('CarlaaColumna')
+client = Bot('KarlaKolumna')
 client.remove_command('help')
 
 # Prompt users for keywords to search for in the links.
@@ -86,48 +86,32 @@ async def check_urls(urls, channel_name):
             if playBellSound:
                 winsound.PlaySound('bell.wav', winsound.SND_FILENAME)
 
+async def get_last_msg(channelid):
+    msg = await client.get_channel(channelid).history(limit=1).flatten()
+    return msg[0]
+
+@client.event
+async def on_ready():
+    print_time('{} is ready to watch for links.'.format(str(client.user)))
+    if len(keywords) >= 1 and keywords[0] != '':
+        print_time('Watching for keywords {}.'.format(', '.join(keywords)))
+    else:
+        print_time('No keywords have been provided.')
+    if len(blacklist) > 0:
+        print_time('Ignoring keywords {}.'.format(', '.join(blacklist)))
+    else:
+        print_time('No keywords currently blacklisted.')
+
+# Fixed discordpy not able to read embeds anymore. Thanks to dubble#0001 on Discord.
 @client.event
 async def on_message(message):
-    global start_count
-    # temporary bypass to weird d.py cacheing issue
-    # only print this info on the first time the client launches. this is due to d.py calling on_ready() after the bot regains connection
-    if start_count == 0:
-        print_time('{} is ready to cop some restocks.'.format(str(client.user)))
-        if len(keywords) >= 1 and keywords[0] != '':
-            print_time('Watching for keywords {}.'.format(', '.join(keywords)))
-        else:
-            print_time('No keywords have been provided.')
-        if len(blacklist) > 0:
-            print_time('Ignoring keywords {}.'.format(', '.join(blacklist)))
-        else:
-            print_time('No keywords currently blacklisted.')
-        start_count += 1
-    else:
-        if message.channel.id in channels:
-            if message.embeds:
-                for embed in message.embeds:
-                    toembed = embed.to_dict()
-                    if str(toembed['type']).lower() != 'link':
-                        urls = re.findall("(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'.,<>?«»“”‘’]))?",toembed['title'])
-                        if urls:
-                            await check_urls(urls, message.channel.name)
-                        try:
-                            urls2 = re.findall("(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'.,<>?«»“”‘’]))?",toembed['description'])
-                            if urls2:
-                                await check_urls(urls2, message.channel.name)
-                        except:
-                            pass
-                        try:
-                            for field in toembed['fields']:
-                                urls3 = re.findall("(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'.,<>?«»“”‘’]))?",str(field))
-                                if urls3:
-                                    await check_urls(urls3, message.channel.name)
-                        except:
-                            pass
-            if message.content != '':
-                print_time(message.content)
-                urls4 = re.findall("(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'.,<>?«»“”‘’]))?",message.content)
-                if urls4:
-                    await check_urls(urls4, message.channel.name)
+    if message.channel.id in channels:
+        await asyncio.sleep(0.3)
+        last_msg = await get_last_msg(message.channel.id)
+        fields = last_msg.embeds[0].fields
+        linkembed = next(x for x in fields if x.name == "Link")
+        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', linkembed.value if linkembed else "")
+        for url in urls:
+            await check_urls(urls, message.channel.name)
 
 client.run(token,bot=False)
