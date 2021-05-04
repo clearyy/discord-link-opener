@@ -107,11 +107,18 @@ async def on_ready():
 async def on_message(message):
     if message.channel.id in channels:
         await asyncio.sleep(0.3)
-        last_msg = await get_last_msg(message.channel.id)
-        fields = last_msg.embeds[0].fields
-        linkembed = next(x for x in fields if x.name == "Link")
-        urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', linkembed.value if linkembed else "")
-        for url in urls:
-            await check_urls(urls, message.channel.name)
+        try:
+            last_msg = await get_last_msg(message.channel.id)
+            fields = last_msg.embeds[0].fields
+            linkembed = next(x for x in fields if x.name == "Link")
+            urls = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', linkembed.value if linkembed else "")
+            for url in urls:
+                await check_urls(urls, message.channel.name)
+        except:
+            if message.content != '':
+                urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.#&+]+\.[\w/\-?=%.#&+]+",message.content)
+                
+                if urls:
+                    await check_urls(urls, message.channel.name)
 
 client.run(token,bot=False)
