@@ -1,6 +1,11 @@
 # discord-link-opener
 Automatically open browser tabs when links matching given constraints are sent in discord channels.
-Adapted to link sent by https://partalert.net/join-discord. If a link contains `partalert.net`, the script directly builds the Amazon link and opens it directly (of course including the PartAlert affiliate information). 
+Adapted to link sent by https://partalert.net/join-discord. If a link contains `partalert.net`, the script directly builds the Amazon link and opens it directly (of course including the PartAlert affiliate information).
+
+# Disclaimer
+Use at own risk!
+
+Automating normal user accounts (generally called "self-bots") is against the [Discord Guidelines](https://discord.com/guidelines) and may result in an account termination (ban) without prior notice.
 
 # Installation and Usage
 1. Download Python 3.6.x or 3.7.x . Before installing, make sure to check “Add Python to PATH”.
