@@ -9,12 +9,12 @@ based on https://github.com/clearyy/discord-link-opener and https://github.com/V
 
 import webbrowser
 import asyncio
-import discord
 from discord.ext.commands import Bot
-from discord.ext import commands
 import re
 import winsound
 from datetime import datetime
+import urllib.parse as urlparse
+from urllib.parse import parse_qs
 
 #pylint: disable=anomalous-backslash-in-string
 
@@ -59,11 +59,14 @@ def get_amazon_url(url):
     :param url: An partalert.net link for an amazon product
     :return: The extracted amazon link to the product
     """
-    # Split url and filter needed parts
-    asin, price, smid, tag, timestamp, title, tld = url.split("&")
 
-    # For the product id and country search for the last '=' and collect the part after it
-    prod_id, country = (info[info.rfind("=")+1:] for info in (asin, tld))
+    # Parse url to obtain query parameters
+    parsed = urlparse.urlparse(url)
+
+    country = parse_qs(parsed.query)['tld'][0]
+    prod_id = parse_qs(parsed.query)['asin'][0]
+    tag = parse_qs(parsed.query)['tag'][0]
+    smid = parse_qs(parsed.query)['smid'][0]
 
     # Create full Amazon url
     url = f"https://www.amazon{country}/dp/{prod_id}?{tag}&linkCode=ogi&th=1&psc=1&{smid}"
