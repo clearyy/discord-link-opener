@@ -15,29 +15,43 @@ import winsound
 from datetime import datetime
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
+import yaml
 
 #pylint: disable=anomalous-backslash-in-string
 
 client = Bot('KarlaKolumna')
 client.remove_command('help')
 
-# Prompt users for keywords to search for in the links.
-keywords = list(map(str,input("Enter keywords to search for, seperated by space: ").split()))
+#Pulling configuration from yaml file
+with open("config.yml", "r") as ymlfile:
+    cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
 
-# Prompt user to enter negative keywords that will prevent a browser window from opening. To have no blacklisted words, press enter right away
-blacklist = list(map(str,input("Enter blacklisted keywords, seperated by space: ").split()))
+#Registering the browsers and preparing the choice
+webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(cfg['browsers']['chrome']['path']))
+webbrowser.register('edgechromium', None, webbrowser.BackgroundBrowser(cfg['browsers']['edgechromium']['path']))
+webbrowser.register('firefox', None, webbrowser.BackgroundBrowser(cfg['browsers']['firefox']['path']))
+browserchoice = cfg['browsers']['user_choice']
 
-# Enter channel id(s) where links would be picked up (monitor channel id) seperated by commas. these should be ints
-channels = []
+# Pulling keywords from yml config file
+keywords = cfg['filters']['keywords']
 
-# Enter token of discord account that has access to watch specified channels
-token = ''
+# Pulling blacklist from yml file and accounting for it being null
+black = cfg['filters']['blacklist']
+if black == [None]:
+    blacklist = ''
+print(blacklist)
+
+# Pulling channels from yml file
+channels = cfg['channels']
+
+# Pulling token from the yml file
+token = cfg['token']
 
 global start_count
 start_count = 0
 
 # Decide whether you want to hear a bell sound when a link is opened (True/False)
-playBellSound = True
+playBellSound = cfg['various']['playBellSound']
 
 # Based on https://github.com/Vincentt1705/partalert-link-opener
 # Function to print the current time before the information about the link.
@@ -80,11 +94,11 @@ async def check_urls(urls, channel_name):
             if "partalert.net" in url:
                 amazon_url = get_amazon_url(url)
                 # Enter path to your browser
-                webbrowser.get("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe %s").open(amazon_url)
+                webbrowser.get(browserchoice).open_new_tab(amazon_url)
                 print_time(f'Link opened from #{channel_name}: {amazon_url}')
             else: 
                 # Enter path to your browser
-                webbrowser.get("C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe %s").open(url)
+                webbrowser.get(browserchoice).open_new_tab(url)
                 print_time(f'Link opened from #{channel_name}: {url}')
             if playBellSound:
                 winsound.PlaySound('bell.wav', winsound.SND_FILENAME)
@@ -122,6 +136,5 @@ async def on_message(message):
                 urls = re.findall("(?:(?:https?|ftp):\/\/)?[\w/\-?=%.#&+]+\.[\w/\-?=%.#&+]+",message.content)
                 
                 if urls:
-                    await check_urls(urls, message.channel.name)
-
+                    asyncio.ensure_future(check_urls(urls, message.channel.name))
 client.run(token,bot=False)
