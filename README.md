@@ -1,6 +1,6 @@
 # discord-link-opener
 Automatically open browser tabs when links matching given constraints are sent in discord channels.
-Adapted to link sent by https://partalert.net/join-discord. If a link contains `partalert.net`, the script directly builds the Amazon link and opens it directly (of course including the PartAlert affiliate information).
+Adapted to link sent by https://partalert.net/join-discord. If a link contains `partalert.net`, the script builds the Amazon link and opens it in the browser of your choice (of course including the PartAlert affiliate information).
 
 # Disclaimer
 Use at own risk!
@@ -16,19 +16,15 @@ pip install asyncio
 pip install pyyaml
 ```
 3. Download Link Opener: https://github.com/Smidelis/discord-link-opener/
-4. Extract the contents of the *.zip file to your Desktop/Documents
-5. Copy config_example.yaml and rename it to config.yml
-6. Replace the placeholders with the values for the token*, the keywords you're looking for, the blacklisted words and the channels
-* Add your Discord token. (Tutorial on how to find your token: https://www.youtube.com/watch?v=tI1lzqzLQCs)
-
-**Do not edit the keyword and blacklist lines!**
-
-6. 3 browsers have been implemented: chrome, edgechromium, firefox and you can choose the one you want to use by editing the user_choice parameter
-7. Save the file.
-8. Run open.py
-9. Wait for the bot to automatically open new browser tabs when links matching given constraints are sent in the specified discord channels. 
-10. Cook.
-11. To change keywords at any point, press Ctrl + c to terminate the script. Then simply run the script again and enter new words when prompted.
+4. Extract the contents of the *.zip file to a local folder of your choice (desktop/documents/...)
+5. Copy config_example.yaml and rename it to config.yml.
+6. Open the config.yml and replace the placeholders with the values for the token (tutorial on how to find your token: https://www.youtube.com/watch?v=tI1lzqzLQCs), the keywords you're looking for, the blacklisted words and the channels.
+7. Three browsers have been implemented: chrome, edgechromium and firefox. Change the user_choice to the value of your preferred browser.
+8. Save the file.
+9. Open PowerShell/CMD and change directory (cd) to the folder, where you have extracted the *.zip file to.
+10. Run open.py.
+11. Wait for the bot to automatically open new browser tabs when links matching given constraints are sent in the specified discord channels. 
+12. Cook.
 
 # Requirements
 asyncio, discord.py, pyyaml
@@ -38,4 +34,4 @@ This was designed for and only tested on windows.
 
 # Credits
 This script is a combination of the versions by clearyy and Vincentt1705 and some own ideas. Thanks for the inspiration!
-Config files added by elevul
+Config files added by elevul.
