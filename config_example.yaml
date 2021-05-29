@@ -14,3 +14,12 @@ channels:
   - 123456789123456789
   - 123456789123456789
   - 123456789123456789
+browsers:
+  chrome:
+    path: 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+  edgechromium:
+    path: 'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+  firefox:
+    path: 'C:\Program Files\Mozilla Firefox\firefox.exe'
+  #replace with the name of any of the browsers in the list above. Default is chrome
+  user_choice: 'chrome'

@@ -23,7 +23,7 @@ pip install pyyaml
 
 **Do not edit the keyword and blacklist lines!**
 
-6. The script will open the link with your default browser: https://support.microsoft.com/en-us/windows/change-your-default-browser-in-windows-10-020c58c6-7d77-797a-b74e-8f07946c5db6
+6. 3 browsers have been implemented: chrome, edgechromium, firefox and you can choose the one you want to use by editing the user_choice parameter
 7. Save the file.
 8. Run open.py
 9. Wait for the bot to automatically open new browser tabs when links matching given constraints are sent in the specified discord channels. 

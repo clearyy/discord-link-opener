@@ -22,8 +22,15 @@ import yaml
 client = Bot('KarlaKolumna')
 client.remove_command('help')
 
+#Pulling configuration from yaml file
 with open("config.yml", "r") as ymlfile:
     cfg = yaml.load(ymlfile, Loader=yaml.FullLoader)
+
+#Registering the browsers and preparing the choice
+webbrowser.register('chrome', None, webbrowser.BackgroundBrowser(cfg['browsers']['chrome']['path']))
+webbrowser.register('edgechromium', None, webbrowser.BackgroundBrowser(cfg['browsers']['edgechromium']['path']))
+webbrowser.register('firefox', None, webbrowser.BackgroundBrowser(cfg['browsers']['firefox']['path']))
+browserchoice = cfg['browsers']['user_choice']
 
 # Pulling keywords from yml config file
 keywords = cfg['filters']['keywords']
@@ -87,11 +94,11 @@ async def check_urls(urls, channel_name):
             if "partalert.net" in url:
                 amazon_url = get_amazon_url(url)
                 # Enter path to your browser
-                webbrowser.open_new_tab(amazon_url)
+                webbrowser.get(browserchoice).open_new_tab(amazon_url)
                 print_time(f'Link opened from #{channel_name}: {amazon_url}')
             else: 
                 # Enter path to your browser
-                webbrowser.open_new_tab(url)
+                webbrowser.get(browserchoice).open_new_tab(url)
                 print_time(f'Link opened from #{channel_name}: {url}')
             if playBellSound:
                 winsound.PlaySound('bell.wav', winsound.SND_FILENAME)
