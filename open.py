@@ -39,6 +39,8 @@ keywords = cfg['filters']['keywords']
 black = cfg['filters']['blacklist']
 if black == [None]:
     blacklist = ''
+else:
+    blacklist = black
 print(blacklist)
 
 # Pulling channels from yml file
