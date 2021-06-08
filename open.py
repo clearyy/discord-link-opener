@@ -85,7 +85,7 @@ def get_amazon_url(url):
     smid = parse_qs(parsed.query)['smid'][0]
 
     # Create full Amazon url
-    url = f"https://www.amazon{country}/dp/{prod_id}?{tag}&linkCode=ogi&th=1&psc=1&{smid}"
+    url = f"https://www.amazon{country}/dp/{prod_id}?tag={tag}&linkCode=ogi&th=1&psc=1&smid={smid}"
     return url
 
 # Check for keywords and blacklisted words in message urls and open browser if conditions are met
