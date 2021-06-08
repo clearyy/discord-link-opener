@@ -1,6 +1,5 @@
 # discord-link-opener
 Automatically open browser tabs when links matching given constraints are sent in discord channels.
-Adapted to link sent by https://partalert.net/join-discord. If a link contains `partalert.net`, the script builds the Amazon link and opens it in the browser of your choice (of course including the PartAlert affiliate information).
 
 # Disclaimer
 Use at own risk!
