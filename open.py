@@ -68,6 +68,7 @@ def print_time(*content):
     print(f"[{date_time}] - [INFO] ", *content)
 
 # Function to build the amazon url, where partalert is redirecting to
+# Obsolete, as partalert URL is not containing Amazon information anymore.
 def get_amazon_url(url):
     """
     This function collects and returns an amazon link
@@ -92,18 +93,10 @@ def get_amazon_url(url):
 async def check_urls(urls, channel_name):
     for url in urls:
         if any(x in url.lower() for x in keywords) and all(x not in url.lower() for x in blacklist):
-            # Check if url contains partalert.net. If true, direct amazon link will be built.
-            if "partalert.net" in url:
-                amazon_url = get_amazon_url(url)
-                # Enter path to your browser
-                webbrowser.get(browserchoice).open_new_tab(amazon_url)
-                print_time(f'Link opened from #{channel_name}: {amazon_url}')
-            else: 
-                # Enter path to your browser
-                webbrowser.get(browserchoice).open_new_tab(url)
-                print_time(f'Link opened from #{channel_name}: {url}')
-            if playBellSound:
-                winsound.PlaySound('bell.wav', winsound.SND_FILENAME)
+            webbrowser.get(browserchoice).open_new_tab(url)
+            print_time(f'Link opened from #{channel_name}: {url}')
+        if playBellSound:
+            winsound.PlaySound('bell.wav', winsound.SND_FILENAME)
 
 async def get_last_msg(channelid):
     msg = await client.get_channel(channelid).history(limit=1).flatten()
