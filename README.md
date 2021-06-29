@@ -7,7 +7,7 @@ In order to run it now, you must install discord.py-self
 # Installation and Usage
 1.    Download Python 3.6.x or 3.7.x . Before installing, make sure to check “Add Python to PATH”.
 2.   Once installed, open CMD and type: 
-                     pip install discord.py[voice] and 
+                     pip install discord.py-self and 
                      pip install asyncio
 3.    Download Link Opener: https://github.com/clearyy/discord-link-opener
 4.    Copy open.py to your desktop.
