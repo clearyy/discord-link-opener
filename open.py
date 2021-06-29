@@ -81,4 +81,4 @@ async def on_message(message):
                 if urls4:
                     await check_urls(urls4)
 
-client.run(token,bot=False)
+client.run(token)
