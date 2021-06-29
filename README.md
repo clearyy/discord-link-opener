@@ -1,6 +1,9 @@
 # discord-link-opener
 Automatically open browser tabs when links matching given constraints are sent in discord channels.
 
+discord.py updates have depreceated the previous version of this script. 
+In order to run it now, you must install discord.py-self
+
 # Installation and Usage
 1.    Download Python 3.6.x or 3.7.x . Before installing, make sure to check “Add Python to PATH”.
 2.   Once installed, open CMD and type: 
@@ -20,7 +23,7 @@ Automatically open browser tabs when links matching given constraints are sent i
 10.   To change keywords at any point, press Ctrl + c to terminate the script. Then simply run the script again and enter new words when prompted.
 
 # Requirements
-asyncio, discord.py
+asyncio, discord.py-self
 
 # Operating Systems
 This was designed for and only tested on windows.
