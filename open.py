@@ -4,6 +4,7 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 import re
+import winsound
 
 '''
 by cleary#6546 // @preorderd
@@ -26,6 +27,9 @@ channels = []
 #enter token of discord account that has access to watch specified channels
 token = ''
 
+#whether you would like to hear a bell sound as soon as a link is opened
+playBellSound = True
+
 global start_count
 start_count = 0
 
@@ -35,6 +39,8 @@ async def check_urls(urls):
         if any(x in url.lower() for x in keywords) and all(x not in url.lower() for x in blacklist):
             #enter path to chrome here, for windows 10, this should work
             webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(url)
+            if playBellSound:
+                winsound.PlaySound('bell.wav', winsound.SND_FILENAME)
             print(f'Opened {url}')
 
 @client.event
